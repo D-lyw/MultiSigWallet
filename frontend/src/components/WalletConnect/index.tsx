@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { NETWORK_TYPE } from '../../constants'
 import { Web3Context } from '../../context/web3'
-import Web3Modal, { providers } from 'web3modal'
+import Web3Modal, { IProviderOptions } from 'web3modal'
 import { ethers } from 'ethers'
+import WalletConnectProvider from '@walletconnect/web3-provider'
 
 interface WalletConnectProps {
   connectType: number
@@ -15,6 +16,7 @@ const WalletConnect: React.FC<WalletConnectProps> = (props) => {
   const { dispatch, state } = useContext(Web3Context)
   const [web3Modal, setWeb3Modal] = useState<Web3Modal>()
 
+  // 直接请求连接MetaMask钱包
   const handleConnectWallet = async () => {
     const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
     const networkType: NETWORK_TYPE = Number(window.ethereum.networkVersion)
@@ -29,9 +31,15 @@ const WalletConnect: React.FC<WalletConnectProps> = (props) => {
     })
   }
 
+  // 使用Web3Modal库支持多种钱包连接
   const handleWeb3ModalConnect = async () => {
-    const providerOptions = {
-      /* See Provider Options Section */
+    const providerOptions: IProviderOptions = {
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          infuraId: process.env.INFURA_ID
+        }
+      }
     };
     const web3Modal = new Web3Modal({
       network: "mainnet", // optional
@@ -42,18 +50,15 @@ const WalletConnect: React.FC<WalletConnectProps> = (props) => {
     web3Modal.clearCachedProvider()
     const instance = await web3Modal.connect()
     const provider = new ethers.providers.Web3Provider(instance);
-    console.log(provider)
-    
+
     console.log(await provider.getBlockNumber())
     dispatch({ value: provider, type: 'SetProvider' })
     setWeb3Modal(web3Modal)
   }
 
 
-  // if (connectType === 1) {
-  //   // 仅支持使用MetaMask
-  //   return <Button onClick={handleConnectWallet} >连接钱包</Button>
-  // }
+  // 仅支持使用MetaMask
+  // return <Button onClick={handleConnectWallet} >连接钱包</Button>
 
   // 使用Web3Modal
   return <div>
