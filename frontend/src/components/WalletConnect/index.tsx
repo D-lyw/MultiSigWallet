@@ -56,7 +56,6 @@ const WalletConnect: React.FC<WalletConnectProps> = (props) => {
     setWeb3Modal(web3Modal)
   }
 
-
   // 仅支持使用MetaMask
   // return <Button onClick={handleConnectWallet} >连接钱包</Button>
 
