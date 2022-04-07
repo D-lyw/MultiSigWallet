@@ -1,12 +1,13 @@
 import React, { useReducer, useEffect, useState, useCallback } from 'react';
 import './App.scss';
-import { Button } from 'react-bootstrap';
+import { Button, Col, Container, Row, Tabs, Tab } from 'react-bootstrap';
 import { defaultWeb3Info, reducer, Web3Context } from './context/web3';
 import { WalletConnect, NoWalletDetectedTsx } from './components'
 import Web3Modal, { IProviderOptions } from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import { ethers } from 'ethers';
 import { listenWalletChange } from './utils';
+import Blockie from './components/Blockie';
 
 const providerOptions: IProviderOptions = {
   walletconnect: {
@@ -20,7 +21,7 @@ const providerOptions: IProviderOptions = {
 function App() {
   const [state, dispatch] = useReducer(reducer, defaultWeb3Info)
   const [web3Modal, setWeb3Modal] = useState<Web3Modal>()
-  const { account } = state
+  const { account, provider } = state
 
   useEffect(() => {
     // 实例化web3modal
@@ -59,11 +60,21 @@ function App() {
   return (
     <Web3Context.Provider value={{ state, dispatch }}>
       {
-        account ? <div className="App">
-          <header className="App-header">
-            {account} <Button onClick={handleLogout}>Logout</Button>
+        account ? <Container className="App">
+          <header>
+            <div className='headerTitle'>MultiSignWallet Dapp Demo</div>
+            <div>
+              {account}
+              <Button size="sm" onClick={handleLogout}>Logout</Button>
+            </div>
           </header>
-        </div> :
+          <Tabs>
+            <Tab eventKey="wallet" title="多签钱包">
+              <Blockie account={account} />
+            </Tab>
+            <Tab eventKey="manage" title="管理"></Tab>
+          </Tabs>
+        </Container> :
           // @ts-ignore
           <WalletConnect handleConnect={() => handleConnect(web3Modal)} web3Modal={web3Modal} />
       }
