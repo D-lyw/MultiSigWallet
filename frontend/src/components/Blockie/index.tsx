@@ -4,8 +4,8 @@ import Blockies from 'react-blockies'
 import styles from './index.scss'
 
 interface BlockieProps {
-  /** set wallet account as the seed */
-  account?: string;
+  /** set wallet address as the seed */
+  address?: string;
   /** optional class name for the canvas element; "identicon" by default */
   className?: string;
   /** number of squares wide/tall the image will be; default = 15 */
@@ -21,15 +21,15 @@ interface BlockieProps {
 }
 
 /**
- * generate account avatar by wallet address 
+ * generate address avatar by wallet address 
  * @param props 
  * @returns JSX Element
  */
 const Blockie: React.FC<BlockieProps> = (props) => {
-  const { account = '0x000000000000000000000000000000000000dead', className, ...restProps } = props
+  const { address = '0x000000000000000000000000000000000000dead', className, ...restProps } = props
 
   return <Blockies
-    seed={account.toLowerCase()}
+    seed={address.toLowerCase()}
     className={className ? className : styles.identicon}
     {...restProps}
   />

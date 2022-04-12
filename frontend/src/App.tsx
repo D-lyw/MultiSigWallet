@@ -2,7 +2,7 @@ import React, { useReducer, useEffect, useState, useCallback } from 'react';
 import './App.scss';
 import { Button, Col, Container, Row, Tabs, Tab } from 'react-bootstrap';
 import { defaultWeb3Info, reducer, Web3Context } from './context/web3';
-import { WalletConnect, NoWalletDetectedTsx } from './components'
+import { WalletConnect, NoWalletDetectedTsx, Address } from './components'
 import Web3Modal, { IProviderOptions } from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import { ethers } from 'ethers';
@@ -64,13 +64,12 @@ function App() {
           <header>
             <div className='headerTitle'>MultiSignWallet Dapp Demo</div>
             <div>
-              {account}
-              <Button size="sm" onClick={handleLogout}>Logout</Button>
+              <Address address={account}/>
+              {/* <Button size="sm" onClick={handleLogout}>Logout</Button> */}
             </div>
           </header>
           <Tabs>
             <Tab eventKey="wallet" title="多签钱包">
-              <Blockie account={account} />
             </Tab>
             <Tab eventKey="manage" title="管理"></Tab>
           </Tabs>
