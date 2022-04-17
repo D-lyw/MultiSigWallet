@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Counter } from "./Counter";
+export type { MultiSigWallet } from "./MultiSigWallet";
 
 export { Counter__factory } from "./factories/Counter__factory";
+export { MultiSigWallet__factory } from "./factories/MultiSigWallet__factory";
