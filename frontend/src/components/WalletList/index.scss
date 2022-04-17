@@ -1,0 +1,15 @@
+.ant-form-item-control-input-content > .ant-tag + .ant-tag {
+  margin-top: 10px;
+}
+.ant-form-item-control-input-content > .ant-tag {
+  padding: 0.2em 0.6em;
+}
+
+.ant-form-item-control-input-content {
+  .tagInput {
+    margin: 0.5em 0;
+  }
+  .site-tag-plus {
+    cursor: pointer;
+  }
+}

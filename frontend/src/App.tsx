@@ -8,6 +8,7 @@ import WalletConnectProvider from '@walletconnect/web3-provider'
 import { ethers } from 'ethers';
 import { listenWalletChange } from './utils';
 import Blockie from './components/Blockie';
+import WalletList from './components/WalletList';
 
 const providerOptions: IProviderOptions = {
   walletconnect: {
@@ -63,8 +64,9 @@ function App() {
         account ? <Container className="App">
           <header>
             <div className='headerTitle'>MultiSignWallet Dapp Demo</div>
+            <WalletList />
             <div>
-              <Address address={account}/>
+              <Address address={account} />
               {/* <Button size="sm" onClick={handleLogout}>Logout</Button> */}
             </div>
           </header>
